@@ -12,5 +12,5 @@ $ brew install websharks-osa
 ### Upgrading To Latest Version
 
 ```bash
-$brew upgrade websharks-osa
+$ brew upgrade websharks-osa
 ```
