@@ -7,5 +7,6 @@ This repo contains OSA libraries for JavaScript for Automation (JXA) scripting o
 ## Installation Instructions:
 
 ```bash
-$ brew install ????
+$ brew tap websharks/formulas
+$ brew install websharks-osa
 ```
