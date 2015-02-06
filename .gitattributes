@@ -35,6 +35,10 @@
 *.js.map text
 *.json text
 
+# Applescript files.
+*.applescript text
+*.scpt binary
+
 # PHP scripts/files.
 *.inc text
 *.php text
