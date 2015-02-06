@@ -38,7 +38,7 @@ this.require = function(jxa, path, sourceOnly)
 		return null; // Not possible.
 
 	var homeDir = $('~').stringByExpandingTildeInPath.js,
-		dir = homeDir + '/library/script libraries/websharks/libraries',
+		dir = homeDir + '/library/script libraries/websharks-osa/libraries',
 		absPath = path.indexOf('/') === 0 ? path : dir + '/' + path + '.js',
 		fileContents = $.NSFileManager.defaultManager.contentsAtPath(absPath),
 		source = $.NSString.alloc.initWithDataEncoding(fileContents, $.NSUTF8StringEncoding).js,

@@ -28,7 +28,7 @@ while IFS=',' read -ra args; do
 done <<< "$(tokenize_escaped_commas "$1")";
 
 if [ "$script" != '' ]; then
-	scriptsDir=$(eval echo ~/library/script\ libraries/websharks/scripts);
+	scriptsDir=$(eval echo ~/library/script\ libraries/websharks-osa/scripts);
 	if [ "${#scriptArgs[@]}" -ge 2 ]; then
 		echo -n "$(/usr/bin/env osascript -l JavaScript "$scriptsDir"/"$script".js.applescript "${scriptArgs[@]:1}" 2>/dev/null)";
 	else

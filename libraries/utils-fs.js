@@ -12,9 +12,9 @@
 			return $('~').stringByExpandingTildeInPath.js;
 
 		},
-		wsDir  : function()
+		wsOSADir  : function()
 		{
-			return this.homeDir() + '/library/script libraries/websharks';
+			return this.homeDir() + '/library/script libraries/websharks-osa';
 		}
 	};
 })();
