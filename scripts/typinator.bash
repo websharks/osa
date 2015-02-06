@@ -30,8 +30,8 @@ done <<< "$(tokenize_escaped_commas "$1")";
 if [ "$script" != '' ]; then
 	scriptsDir=$(eval echo ~/library/script\ libraries/websharks/scripts);
 	if [ "${#scriptArgs[@]}" -ge 2 ]; then
-		echo -n "$(/usr/bin/env osascript -l JavaScript "$scriptsDir"/"$script".applescript "${scriptArgs[@]:1}" 2>/dev/null)";
+		echo -n "$(/usr/bin/env osascript -l JavaScript "$scriptsDir"/"$script".js.applescript "${scriptArgs[@]:1}" 2>/dev/null)";
 	else
-		echo -n "$(/usr/bin/env osascript -l JavaScript "$scriptsDir"/"$script".applescript 2>/dev/null)";
+		echo -n "$(/usr/bin/env osascript -l JavaScript "$scriptsDir"/"$script".js.applescript 2>/dev/null)";
 	fi;
 fi;
