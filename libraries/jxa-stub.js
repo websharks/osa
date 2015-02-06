@@ -18,8 +18,17 @@ var jxa = new (function()
 		this.get = function(slice)
 		{
 			if(typeof slice !== 'number')
-				slice = 4; // First four are processing related.
-			return $.NSProcessInfo.processInfo.arguments.js.slice(slice);
+				slice = 4; // Default slice.
+
+			var nsArgs = $.NSProcessInfo.processInfo.arguments.js.slice(slice);
+
+			for(var i = 0, args = []; i < nsArgs.length; i++)
+			{
+				if(/^(?:on|off|yes|no|true|false)$/i.test(nsArgs[i].js))
+					args.push(/^(?:on|yes|true)$/i.test(nsArgs[i].js));
+				else args.push(nsArgs[i].js);
+			}
+			return args;
 		};
 	};
 
