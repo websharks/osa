@@ -16,7 +16,11 @@ restore_escaped_commas(){
 
 script=''; scriptArgs=(); i=0;
 
-while IFS=',' read -ra args; do
+if [[ "$1" == *"|:|"* ]]; then
+	arg_separator='|:|';
+else arg_separator=','; fi;
+
+while IFS="$arg_separator" read -ra args; do
 	for arg in "${args[@]}"; do
 		i=$((i+1));
 		if [ $i == 1 ]; then
