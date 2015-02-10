@@ -5,31 +5,44 @@ trim(){
 	local string="$*";
 	echo "$string" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//';
 };
-tokenize_escaped_commas(){
+tokenize_special_chars(){
 	local string="$*";
-	echo "$string" | sed -e 's/\\,/%%comma%%/';
+
+	if [ "$argSeparator" == ',' ]; then
+		echo "$string" | sed -e 's/\\,/%%comma%%/';
+	else echo "$string"; fi;
 };
-restore_escaped_commas(){
+restore_special_chars(){
 	local string="$*";
-	echo "$string" | sed -e 's/%%comma%%/,/';
+
+	if [ "$argSeparator" == ',' ]; then
+		echo "$string" | sed -e 's/%%comma%%/,/';
+	else echo "$string"; fi;
 };
 
-script=''; scriptArgs=(); i=0;
+script=''; scriptArgs=();
 
-if [[ "$1" == *"|:|"* ]]; then
-	arg_separator='|:|';
-else arg_separator=','; fi;
+if [[ "$1" == *'|:|'* ]];
+	then argSeparator='|:|';
+else argSeparator=','; fi;
 
-while IFS="$arg_separator" read -ra args; do
-	for arg in "${args[@]}"; do
-		i=$((i+1));
-		if [ $i == 1 ]; then
-			script="$(restore_escaped_commas "$(trim "$arg")")";
-		elif [ $i -ge 2 ]; then
-			scriptArgs[i-1]="$(restore_escaped_commas "$(trim "$arg")")";
-		fi;
-	done;
-done <<< "$(tokenize_escaped_commas "$1")";
+_i=0; _arg=''; # Temp vars.
+_args="$(tokenize_special_chars "$1")";
+
+while [ "$_args" != '' ]; do
+	_i=$((_i+1)); # Counter.
+	_arg="${_args%%"$argSeparator"*}";
+
+	if [ "$_arg" == "$_args" ];
+		then _args=''; # The last argument.
+	else _args="${_args#*"$argSeparator"}"; fi;
+
+	if [ $_i == 1 ]; then
+		script="$(restore_special_chars "$(trim "$_arg")")";
+	elif [ $_i -ge 2 ]; then
+		scriptArgs[_i-1]="$(restore_special_chars "$(trim "$_arg")")";
+	fi;
+done; # End arguments iteration.
 
 if [ "$script" != '' ]; then
 	scriptsDir=$(eval echo ~/library/script\ libraries/websharks-osa/scripts);
