@@ -2,26 +2,26 @@
 {
 	module.exports = // Package.
 	{
-		activeTab       : function()
+		activeTab           : function()
 		{
 			return this.app && this.app.windows && this.app.windows.length
 				? this.app.windows[0].activeTab : null;
 		},
-		activeTabURL    : function()
+		activeTabURL        : function()
 		{
 			var activeTab = this.activeTab();
 			var url = activeTab ? activeTab.url() : '';
 
 			return url === 'chrome://newtab/' ? '' : url;
 		},
-		activeTabTitle  : function()
+		activeTabTitle      : function()
 		{
 			var activeTab = this.activeTab();
 			var title = activeTab ? activeTab.title() : '';
 
 			return title === 'New Tab' ? '' : title;
 		},
-		runScript       : function(scr)
+		runScript           : function(scr)
 		{
 			if(typeof scr === 'function')
 				scr = '(' + scr.toString() + ')();';
@@ -31,7 +31,7 @@
 
 			return activeTab ? activeTab.execute({javascript: scr}) : '';
 		},
-		loadjQuery      : function()
+		loadjQuery          : function()
 		{
 			if(this.jQueryLoaded)
 				return; // Already did this.
@@ -41,7 +41,7 @@
 
 			return this.runScript(jQuerify);
 		},
-		selection       : function(args)
+		selection           : function(args)
 		{
 			this.loadjQuery();
 
@@ -60,7 +60,7 @@
 			};
 			return this.str.toText(this.runScript(getSelection));
 		},
-		slackSelectionBy: function(args)
+		slackSelectionBy    : function(args)
 		{
 			this.loadjQuery();
 
@@ -121,6 +121,45 @@
 				return ''; // Default behavior.
 			};
 			return this.str.toText(this.runScript(getSlackSelectionBy));
+		},
+		setGitHubIssueLabels: function()
+		{
+			this.loadjQuery();
+
+			var doSetGitHubIssueLabels = function()
+			{
+				var afterTimeout = function()
+				{
+					var $body = $('.discussion-timeline textarea#issue_body'),
+						$labels = $('.discussion-sidebar > ul.color-label-list'),
+
+						categoriesRegex = /^categories\:\s+(.+?)$/im,
+						tagsRegex = /^tags\:\s+(.+?)$/im,
+
+						categories, tags; // Initialize.
+
+					if((categories = $body.val().match(categoriesRegex)))
+						categories = categories[1].toLowerCase().split(/[\s,]+/);
+
+					if((tags = $body.val().match(tagsRegex)))
+						tags = tags[1].toLowerCase().split(/[\s,]+/);
+
+					$labels.find('> li[data-name] > a.selected').trigger('click');
+					$labels.find('> li[data-name="draft"] > a').trigger('click');
+
+					if(categories) $.each(categories, function(_, category)
+					{
+						if(!(category = $.trim(category)))
+							return; // Not possible.
+
+						var $anchor = $labels.find('> li[data-name="' + category + '"] > a');
+						if(!$anchor.length) $anchor = $labels.find('> li[data-name="' + category.replace(/\-+/g, ' ') + '"] > a');
+						if($anchor.length) $anchor.trigger('click');
+					});
+				};
+				setTimeout(afterTimeout, 1000);
+			};
+			this.runScript(doSetGitHubIssueLabels);
 		}
 	};
 	module.exports.require = eval(module.jxa.pkg('require'));
