@@ -8,7 +8,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Create Todo Entry</string>
+				<string>New GitHub Issue</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>runWorkflowAsService</string>

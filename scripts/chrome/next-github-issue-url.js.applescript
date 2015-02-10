@@ -9,5 +9,5 @@
 	if(!url || url.indexOf('//github.com/') === -1)
 		return ''; // Not applicable.
 
-	return ws.run('github', 'next-issue-url', [url]);
+	return ws.run('github', ['next-issue-url', url]);
 })();

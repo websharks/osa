@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>409.1</string>
+	<key>AMApplicationVersion</key>
+	<string>2.5</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run JavaScript.action</string>
+				<key>ActionName</key>
+				<string>Run JavaScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>var jxa=new (function(){this.pkg=function(pkg){pkg=String(pkg?pkg:"");pkg=this[pkg].toString();return"("+pkg+")"};this.args=function(jxa){this.get=function(slice){if(typeof slice!=="number"){slice=4}var nsArgs=$.NSProcessInfo.processInfo.arguments.js.slice(slice);for(var i=0,args=[];i&lt;nsArgs.length;i++){if(/^(?:on|off|yes|no|true|false)$/i.test(nsArgs[i].js)){args.push(/^(?:on|yes|true)$/i.test(nsArgs[i].js))}else{args.push(nsArgs[i].js)}}return args}};this.require=function(jxa,path,sourceOnly){if(typeof jxa!=="function"&amp;&amp;typeof jxa!=="object"){return null}path=String(path?path:"");if(path.indexOf("source:")===0){path=path.replace(/^source\:/,""),sourceOnly=true}if(!path){return null}var homeDir=$("~").stringByExpandingTildeInPath.js,dir=homeDir+"/library/script libraries/websharks-osa/libraries",absPath=path.indexOf("/")===0?path:dir+"/"+path+".js",fileContents=$.NSFileManager.defaultManager.contentsAtPath(absPath),source=$.NSString.alloc.initWithDataEncoding(fileContents,$.NSUTF8StringEncoding).js,module={jxa:jxa,parent:this,exports:{}};if(sourceOnly){return source}eval(source);return module.exports}})();function run(input, parameters) {	var app = jxa.require(jxa, 'utils/app')();	var fs = jxa.require(jxa, 'utils/fs');	var chrome = jxa.require(jxa, 'utils/chrome');	var php = jxa.require(jxa, 'utils/php');	var str = jxa.require(jxa, 'utils/str');	var notifier = jxa.require(jxa, 'utils/notifier');		var title = chrome.activeTabTitle();	var url = chrome.activeTabURL();	var entry = (title ? '"' + title + '"' : '') +		(url ? (title ? ' ' : '') + '&lt;' + url + '&gt;' : '');	var entryLink = ''; // Initialize.		var response = app.displayDialog(entry ? entry : 'What\'d you get done?', {		withTitle: 'New Done Entry', defaultAnswer: '',		withIcon: Path(fs.wsOSADir()+'/libraries/images/icon.icns')	});	entry = str.trim(entry + ' ' + response.textReturned),		entryLink = php.runScript('idonethis', [entry, 'todo']),		notifier.notify('New Done Entry', entry, {open: entryLink});}</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunJavaScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunJavaScriptAction</string>
+				<key>IgnoresInput</key>
+				<false/>
+				<key>InputUUID</key>
+				<string>6BA2030B-3BEE-4530-98DA-7E344194FBB4</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+					<string>JavaScript</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>1333F5C7-31DB-4EAA-A309-81A23ACD6FD1</string>
+				<key>ShowWhenRun</key>
+				<false/>
+				<key>UUID</key>
+				<string>E7EC72CC-2D8F-4422-8E55-9B0E6DC7929C</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>function run(input, parameters) {
+	
+	// Your script goes here
+
+	return input;
+}</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>746.500000:316.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run JavaScript.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>variables</key>
+	<array>
+		<dict>
+			<key>UUID</key>
+			<string>634CF5A5-740A-42AE-BC51-2B15FE08C447</string>
+			<key>identifier</key>
+			<string>com.apple.Automator.Variable.Storage</string>
+			<key>name</key>
+			<string>Storage</string>
+		</dict>
+	</array>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>serviceApplicationBundleID</key>
+		<string></string>
+		<key>serviceApplicationPath</key>
+		<string></string>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
