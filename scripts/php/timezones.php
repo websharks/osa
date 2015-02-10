@@ -2,7 +2,7 @@
 <?php
 namespace websharks_osa
 {
-	require_once 'abs-base.php';
+	require_once dirname(__FILE__).'/abs-base.php';
 
 	class command_line_response extends abs_base
 	{

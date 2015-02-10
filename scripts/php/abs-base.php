@@ -1,7 +1,8 @@
 <?php
 namespace websharks_osa
 {
-	require_once 'config.php';
+	require_once dirname(__FILE__).'/config.php';
+	require_once dirname(dirname(dirname(__FILE__))).'/submodules/http-build-url/src/http_build_url.php';
 
 	abstract class abs_base
 	{
@@ -22,6 +23,8 @@ namespace websharks_osa
 
 			$this->config = new config();
 			$this->args   = array_slice($argv, 1);
+
+			date_default_timezone_set('UTC');
 		}
 
 		/*
@@ -113,6 +116,14 @@ namespace websharks_osa
 			return $return_array ? array('code' => $http_code, 'body' => $output) : $output;
 		}
 
+		protected function add_query_args(array $args, $url)
+		{
+			$url   = trim((string)$url);
+			$parts = array('query' => http_build_query($args, '', '&'));
+
+			return http_build_url($url, $parts, HTTP_URL_JOIN_QUERY);
+		}
+
 		/*
 		 * Filesystem utilities.
 		 */
@@ -160,6 +171,9 @@ namespace websharks_osa
 
 			if(!is_readable($temp_dir) || !is_writable($temp_dir))
 				throw new \exception('Unable to locate a readable/writable tmp directory.');
+
+			if(!is_dir($temp_dir .= '/'.str_replace('_', '-', __NAMESPACE__)) && !mkdir($temp_dir))
+				throw new \exception('Unable to create tmp directory.');
 
 			return $temp_dir;
 		}

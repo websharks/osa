@@ -14,6 +14,10 @@ namespace websharks_osa
 		public $idonethis_api_team = 'websharks';
 		public $idonethis_api_endpoint = 'https://idonethis.com/api/v0.1';
 
+		public $google_cse_id = '010747934993918679377:jwdulzd6tx4';
+		public $google_cse_api_key = 'AIzaSyAOV4jhUaqqnNAjMe4qxlxvQcRGPfLUuts';
+		public $google_cse_api_endpoint = 'https://www.googleapis.com/customsearch/v1';
+
 		/*
 		 * Constructor.
 		 */
