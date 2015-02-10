@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+namespace websharks_osa
+{
+	require_once 'abs-base.php';
+
+	class command_line_response extends abs_base
+	{
+		public function __construct()
+		{
+			parent::__construct();
+
+			exit(call_user_func_array('\\hash', $this->args));
+		}
+	}
+
+	new command_line_response();
+}

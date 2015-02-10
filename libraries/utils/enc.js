@@ -8,9 +8,14 @@
 			if(isNaN(limit) || limit <= 0)
 				limit = 15; // Default limit.
 
-			if(mixedCase === undefined) mixedCase = true;
-			if(numbers === undefined) numbers = true;
-			if(symbols === undefined) symbols = true;
+			if(mixedCase === undefined)
+				mixedCase = true;
+
+			if(numbers === undefined)
+				numbers = true;
+
+			if(symbols === undefined)
+				symbols = true;
 
 			var // Vowels get mixed by default however.
 				vowels = ('aeiou' +

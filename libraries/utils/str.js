@@ -16,6 +16,12 @@
 		},
 		escShellArg         : function(str)
 		{
+			if(str === true)
+				str = '1'; // True value.
+
+			else if(str === false || str === undefined)
+				str = ''; // False value.
+
 			str = String(str ? str : '');
 
 			str = str.replace(/\\?'/g, '\'"$&"\'');

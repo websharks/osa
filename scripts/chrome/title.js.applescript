@@ -1,9 +1,8 @@
 (function() // JXA output handler.
 {
 	var jxa = Library('websharks-osa/libraries/jxa');
-	var args = new (eval(jxa.pkg('args')))(jxa);
 	var require = eval(jxa.pkg('require'));
-	var enc = require(jxa, 'utils-enc');
+	var chrome = require(jxa, 'utils/chrome');
 
-	return enc.keyGen.apply(this, args.get());
+	return chrome.activeTabTitle();
 })();

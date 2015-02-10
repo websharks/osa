@@ -4,7 +4,22 @@
 	{
 		activeTab       : function()
 		{
-			return this.app ? this.app.windows[0].activeTab : null;
+			return this.app && this.app.windows && this.app.windows.length
+				? this.app.windows[0].activeTab : null;
+		},
+		activeTabURL    : function()
+		{
+			var activeTab = this.activeTab();
+			var url = activeTab ? activeTab.url() : '';
+
+			return url === 'chrome://newtab/' ? '' : url;
+		},
+		activeTabTitle  : function()
+		{
+			var activeTab = this.activeTab();
+			var title = activeTab ? activeTab.title() : '';
+
+			return title === 'New Tab' ? '' : title;
 		},
 		runScript       : function(scr)
 		{
@@ -12,16 +27,24 @@
 				scr = '(' + scr.toString() + ')();';
 			scr = String(scr ? scr : ''); // Force string value.
 
-			return this.app ? this.activeTab().execute({javascript: scr}) : '';
+			var activeTab = this.activeTab();
+
+			return activeTab ? activeTab.execute({javascript: scr}) : '';
 		},
 		loadjQuery      : function()
 		{
+			if(this.jQueryLoaded)
+				return; // Already did this.
+
 			var jQuery = this.require(module.jxa, 'source:jquery'),
 				jQuerify = 'if(!window.jQuery){' + jQuery + '; jQuery.noConflict(); }';
+
 			return this.runScript(jQuerify);
 		},
 		selection       : function(args)
 		{
+			this.loadjQuery();
+
 			var getSelection = function()
 			{
 				var $ = jQuery,
@@ -39,6 +62,8 @@
 		},
 		slackSelectionBy: function(args)
 		{
+			this.loadjQuery();
+
 			var getSlackSelectionBy = function()
 			{
 				var $ = jQuery,
@@ -99,6 +124,7 @@
 		}
 	};
 	module.exports.require = eval(module.jxa.pkg('require'));
-	module.exports.str = module.exports.require(module.jxa, 'utils-str');
-	module.exports.app = module.exports.require(module.jxa, 'utils-app')('com.google.Chrome');
+	module.exports.str = module.exports.require(module.jxa, 'utils/str');
+	module.exports.app = module.exports.require(module.jxa, 'utils/app')('com.google.Chrome');
+	module.exports.jQueryLoaded = false; // Initialize.
 })();

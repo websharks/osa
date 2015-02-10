@@ -2,9 +2,7 @@
 {
 	var jxa = Library('websharks-osa/libraries/jxa');
 	var require = eval(jxa.pkg('require'));
-	var chrome = require(jxa, 'utils-chrome');
+	var chrome = require(jxa, 'utils/chrome');
 
-	chrome.loadjQuery();
-
-	return chrome.selection();
+	return chrome.activeTabURL();
 })();

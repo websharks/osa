@@ -7,6 +7,7 @@ var jxa = new (function()
 	{
 		pkg = String(pkg ? pkg : '');
 		pkg = this[pkg].toString();
+
 		return '(' + pkg + ')';
 	};
 
