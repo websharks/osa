@@ -306,7 +306,7 @@ namespace websharks_osa
 				return ($string = ''); // Nothing to do.
 
 			if(!strlen($e = $this->base64_url_safe_decode($base64))
-			   || !preg_match('/^~r2\:(?P<iv>[a-zA-Z0-9]+)(?:\:(?P<md5>[a-zA-Z0-9]+))?\|(?P<e>.*?)$/s', $e, $iv_md5_e)
+			   || !preg_match('/^~r2\:(?P<iv>[a-zA-Z0-9]+)(?:\:(?P<md5>[a-zA-Z0-9]+))?\|(?P<e>.*)$/s', $e, $iv_md5_e)
 			) return ($string = ''); // Not possible; unable to decrypt in this case.
 
 			if(!isset($iv_md5_e['iv'][0], $iv_md5_e['e'][0]))
