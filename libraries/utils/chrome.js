@@ -164,6 +164,7 @@
 	};
 	module.exports.require = eval(module.jxa.pkg('require'));
 	module.exports.str = module.exports.require(module.jxa, 'utils/str');
-	module.exports.app = module.exports.require(module.jxa, 'utils/app')('com.google.Chrome');
+	if(!(module.exports.app = module.exports.require(module.jxa, 'utils/app')('com.google.Chrome')))
+		module.exports.app = module.exports.require(module.jxa, 'utils/app')('com.google.Chrome.canary');
 	module.exports.jQueryLoaded = false; // Initialize.
 })();
