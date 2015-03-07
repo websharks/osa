@@ -130,8 +130,8 @@
 			{
 				var afterTimeout = function()
 				{
-					var $body = $('.discussion-timeline textarea#issue_body'),
-						$labels = $('.discussion-sidebar > ul.color-label-list'),
+					var $body = $('textarea#issue_body'),
+						$labels = $('.sidebar-labels'),
 
 						categoriesRegex = /^categories\:\s+(.+?)$/im,
 						tagsRegex = /^tags\:\s+(.+?)$/im,
@@ -144,20 +144,39 @@
 					if((tags = $body.val().match(tagsRegex)))
 						tags = tags[1].toLowerCase().split(/[\s,]+/);
 
-					$labels.find('> li[data-name] > a.selected').trigger('click');
-					$labels.find('> li[data-name="draft"] > a').trigger('click');
+					$labels.find('.js-menu-target').trigger('click'); // Open.
 
-					if(categories) $.each(categories, function(_, category)
+					var afterTimeout1 = function() // Event in sequence.
 					{
-						if(!(category = $.trim(category)))
-							return; // Not possible.
+						$labels.find('.color-label[data-name]').closest('.select-menu-item.selected')
+							.trigger('click'); // Deselect any labels that exist already.
 
-						var $anchor = $labels.find('> li[data-name="' + category + '"] > a');
-						if(!$anchor.length) $anchor = $labels.find('> li[data-name="' + category.replace(/\-+/g, ' ') + '"] > a');
-						if($anchor.length) $anchor.trigger('click');
-					});
+						setTimeout(afterTimeout2, 10); // Next in sequence.
+					};
+					var afterTimeout2 = function() // Event in sequence.
+					{
+						$labels.find('.color-label[data-name="draft"]').closest('.select-menu-item')
+							.trigger('click'); // A `draft` label applies always.
+
+						if(categories) $.each(categories, function(_, category)
+						{
+							if(!(category = $.trim(category)))
+								return; // Not possible.
+
+							var $item = $labels.find('.color-label[data-name="' + category + '"]').closest('.select-menu-item');
+							if(!$item.length) $item = $labels.find('.color-label[data-name="' + category.replace(/\-+/g, ' ') + '"]').closest('.select-menu-item');
+							if($item.length) $item.trigger('click');
+						});
+						setTimeout(afterTimeout3, 10); // Next in sequence.
+					};
+					var afterTimeout3 = function() // Event in sequence.
+					{
+						$labels.find('.js-menu-target').trigger('click'), // Close.
+							$body.focus(); // Move focus back to body.
+					};
+					setTimeout(afterTimeout1, 500); // Begin event sequence.
 				};
-				setTimeout(afterTimeout, 1000);
+				setTimeout(afterTimeout, 1000); // Begin event sequence.
 			};
 			this.runScript(doSetGitHubIssueLabels);
 		}
