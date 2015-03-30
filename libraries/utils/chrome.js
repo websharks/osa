@@ -174,7 +174,7 @@
 						$labels.find('.js-menu-target').trigger('click'), // Close.
 							$body.focus(); // Move focus back to body.
 					};
-					setTimeout(afterTimeout1, 1000); // Begin event sequence.
+					setTimeout(afterTimeout1, 500); // Begin event sequence.
 				};
 				setTimeout(afterTimeout, 1000); // Begin event sequence.
 			};
