@@ -1,3 +1,0 @@
-[submodule "submodules/http-build-url"]
-	path = submodules/http-build-url
-	url = https://github.com/jakeasmith/http_build_url
